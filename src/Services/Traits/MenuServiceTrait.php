@@ -53,18 +53,18 @@ trait MenuServiceTrait
         $processedLinks = [];
         foreach ($links as $key => $link) {
             if ($link->external) {
-                $response .= "<a href=\"$link->external_url\">$link->name</a>";
-                $processedLinks[] = "<a href=\"$link->external_url\">$link->name</a>";
+                $response .= "<li><a href=\"$link->external_url\">$link->name</a></li>";
+                $processedLinks[] = "<li><a href=\"$link->external_url\">$link->name</a></li>";
             } else {
                 $page = $pageRepo->findPagesById($link->page_id);
                 if ($page && $page->is_published && $page->published_at <= Carbon::now(config('app.timezone'))) {
                     if (config('app.locale') == config('quarx.default-language', $this->config('quarx.default-language'))) {
-                        $response .= '<a href="'.URL::to('page/'.$page->url)."\">$link->name</a>";
-                        $processedLinks[] = '<a href="'.URL::to('page/'.$page->url)."\">$link->name</a>";
+                        $response .= '<li><a href="'.URL::to('page/'.$page->url)."\">$link->name</a></li>";
+                        $processedLinks[] = '<li><a href="'.URL::to('page/'.$page->url)."\">$link->name</a></li>";
                     } elseif (config('app.locale') != config('quarx.default-language', $this->config('quarx.default-language'))) {
                         if ($page->translation(config('app.locale'))) {
-                            $response .= '<a href="'.URL::to('page/'.$page->translation(config('app.locale'))->data->url)."\">$link->name</a>";
-                            $processedLinks[] = '<a href="'.URL::to('page/'.$page->translation(config('app.locale'))->data->url)."\">$link->name</a>";
+                            $response .= '<li><a href="'.URL::to('page/'.$page->translation(config('app.locale'))->data->url)."\">$link->name</a></li>";
+                            $processedLinks[] = '<li><a href="'.URL::to('page/'.$page->translation(config('app.locale'))->data->url)."\">$link->name</a></li>";
                         }
                     }
                 } else {
